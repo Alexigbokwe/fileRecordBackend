@@ -69,9 +69,7 @@ namespace fileRecord.Controllers
             string path;
             try
             {
-                //var extension = Path.GetExtension(file.FileName);
-                fileName = file.FileName;//Guid.NewGuid().ToString().Replace("-", "") + extension; //Create a new Name 
-                //for the file due to security reasons.
+                fileName = file.FileName; 
                 path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot//media");
                 if (!Directory.Exists(path))
                 {
@@ -105,15 +103,14 @@ namespace fileRecord.Controllers
         [Route("api/files/sendMail")]
         public async Task<ActionResult> SendMail(MailDataDto data)
         {
-            await MailSend(data);
+            await DispatchMail(data);
             return Ok();
         }
 
-        private static Task MailSend(MailDataDto data)
+        private static Task DispatchMail(MailDataDto data)
         {
             var task = Task.Run(() =>
             {
-
                 try
                 {
                     MailMessage message = new MailMessage();
